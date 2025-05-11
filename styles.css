@@ -156,9 +156,19 @@ h3::after {
     margin-bottom: 1.2rem;
     transition: transform 0.3s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.memory-card:hover .image-placeholder {
+/* When there's a data-image attribute, hide the emoji and show the image */
+.image-placeholder[data-image] {
+    font-size: 0;
+    background-image: var(--bg-image);
+}
+
+.image-placeholder:hover {
     transform: scale(1.02);
 }
 
@@ -254,10 +264,6 @@ footer::before {
 
 .close-lightbox:hover {
     transform: scale(1.1);
-}
-
-.image-placeholder {
-    cursor: pointer;
 }
 
 @media (max-width: 768px) {

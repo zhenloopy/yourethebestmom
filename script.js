@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxCaption = document.querySelector('.lightbox-caption');
     const closeLightbox = document.querySelector('.close-lightbox');
     
+    // Set background images for placeholders
+    document.querySelectorAll('.image-placeholder[data-image]').forEach(placeholder => {
+        const imageUrl = placeholder.getAttribute('data-image');
+        placeholder.style.setProperty('--bg-image', `url(${imageUrl})`);
+    });
+    
     // Add fade-in animation to intro card
     introCard.style.opacity = '0';
     introCard.style.transform = 'translateY(20px)';
@@ -33,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         imagePlaceholder.addEventListener('click', () => {
             const imageUrl = imagePlaceholder.getAttribute('data-image');
-            if (imageUrl && imageUrl !== '[Image URL will go here]') {
+            if (imageUrl) {
                 lightboxImage.src = imageUrl;
                 lightboxCaption.textContent = caption;
                 lightbox.classList.add('active');
