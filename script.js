@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.memory-card');
     const introCard = document.querySelector('.intro-card');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.querySelector('.lightbox-image');
+    const lightboxCaption = document.querySelector('.lightbox-caption');
+    const closeLightbox = document.querySelector('.close-lightbox');
     
     // Add fade-in animation to intro card
     introCard.style.opacity = '0';
@@ -22,17 +26,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 200 + (index * 100));
     });
     
-    // Add click interaction
+    // Lightbox functionality
     cards.forEach(card => {
-        card.addEventListener('click', () => {
-            cards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            
-            // Add a subtle bounce effect
-            card.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                card.style.transform = 'scale(1)';
-            }, 200);
+        const imagePlaceholder = card.querySelector('.image-placeholder');
+        const caption = card.querySelector('.caption').textContent;
+        
+        imagePlaceholder.addEventListener('click', () => {
+            const imageUrl = imagePlaceholder.getAttribute('data-image');
+            if (imageUrl && imageUrl !== '[Image URL will go here]') {
+                lightboxImage.src = imageUrl;
+                lightboxCaption.textContent = caption;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
         });
+    });
+
+    // Close lightbox
+    const closeLightboxHandler = () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    };
+
+    closeLightbox.addEventListener('click', closeLightboxHandler);
+    
+    // Close lightbox when clicking outside the image
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightboxHandler();
+        }
+    });
+
+    // Close lightbox with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightboxHandler();
+        }
     });
 }); 
