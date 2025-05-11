@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     cards.forEach(card => {
         card.addEventListener('click', () => {
-            card.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                card.style.transform = 'scale(1)';
-            }, 200);
+            // Remove active class from all cards
+            cards.forEach(c => c.classList.remove('active'));
+            // Add active class to clicked card
+            card.classList.add('active');
         });
     });
 }); 
